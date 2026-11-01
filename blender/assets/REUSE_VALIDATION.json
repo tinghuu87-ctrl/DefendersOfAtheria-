@@ -1,0 +1,17 @@
+{
+  "asset_collections": 4,
+  "vestergate_linked_placements": 3,
+  "rerun_keeps_three": true,
+  "shared_core_and_ground_mesh_data": true,
+  "independent_position_rotation_scale": true,
+  "cross_scene_reuse": true,
+  "cursor_and_marker_modes": true,
+  "terrain_conforming_samples": 54,
+  "animated_designs": [
+    "Thornrift",
+    "Voidmaw",
+    "Stormscar"
+  ],
+  "linked_library": "Atheria_Portal_Library.blend",
+  "runtime_roblox_integration": false
+}

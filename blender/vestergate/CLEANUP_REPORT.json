@@ -1,0 +1,14 @@
+{
+  "joined_cliffs": 9,
+  "removed_characters": 18,
+  "removed_trees": 3,
+  "grounded_trees": 69,
+  "removed_props": 28,
+  "grounded_props": 537,
+  "removed_plant_components": 120,
+  "grounded_plant_components": 8806,
+  "sealed_defence_ledges": 6,
+  "attached_vines": 244,
+  "terrain_shells": 1,
+  "terrain_nonmanifold_edges": 0
+}

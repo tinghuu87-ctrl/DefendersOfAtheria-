@@ -1,67 +1,118 @@
 {
-  "kind": "Blender actual-mesh support and layout checks",
-  "support_mesh_count": 251,
-  "route_support_samples": 1329,
-  "max_sample_raise_metres": 0.455,
-  "max_sample_drop_metres": 0.3129,
+  "kind": "Revision 02 Blender geometry, road coverage, removals and lamp checks",
+  "route_support_samples": 3101,
   "route_support_issues": [],
+  "green_road_issues": [],
+  "max_sample_raise_metres": 0.4949,
+  "max_sample_drop_metres": 0.4038,
   "terrace_checks": [
     {
       "id": "D1",
-      "minimum_lane_clearance_metres": 2.62,
-      "minimum_ramp_lane_clearance_metres": 5.919,
-      "ramp_gradient": 0.349
+      "minimum_lane_clearance_metres": 0.365,
+      "access": "jump",
+      "ledge_height_metres": 1.55
     },
     {
       "id": "D2",
-      "minimum_lane_clearance_metres": 4.269,
-      "minimum_ramp_lane_clearance_metres": 10.46,
-      "ramp_gradient": 0.328
+      "minimum_lane_clearance_metres": 1.443,
+      "access": "jump",
+      "ledge_height_metres": 1.45
     },
     {
       "id": "D3",
-      "minimum_lane_clearance_metres": 5.016,
-      "minimum_ramp_lane_clearance_metres": 5.568,
-      "ramp_gradient": 0.347
+      "minimum_lane_clearance_metres": 0.814,
+      "access": "jump",
+      "ledge_height_metres": 1.6
     },
     {
       "id": "D4",
       "minimum_lane_clearance_metres": 6.576,
-      "minimum_ramp_lane_clearance_metres": 11.478,
-      "ramp_gradient": 0.344
+      "access": "jump",
+      "ledge_height_metres": 1.65
     },
     {
       "id": "D5",
-      "minimum_lane_clearance_metres": 3.026,
-      "minimum_ramp_lane_clearance_metres": 8.18,
-      "ramp_gradient": 0.338
+      "minimum_lane_clearance_metres": 0.266,
+      "access": "jump",
+      "ledge_height_metres": 0.8
     },
     {
       "id": "D6",
-      "minimum_lane_clearance_metres": 2.865,
-      "minimum_ramp_lane_clearance_metres": 5.787,
-      "ramp_gradient": 0.33
-    },
-    {
-      "id": "D7",
-      "minimum_lane_clearance_metres": 3.706,
-      "minimum_ramp_lane_clearance_metres": 9.576,
-      "ramp_gradient": 0.325
-    },
-    {
-      "id": "D8",
-      "minimum_lane_clearance_metres": 3.287,
-      "minimum_ramp_lane_clearance_metres": 8.806,
-      "ramp_gradient": 0.325
+      "minimum_lane_clearance_metres": 1.176,
+      "access": "jump",
+      "ledge_height_metres": 1.45
     }
   ],
-  "defence_footprint_count": 8,
+  "jump_access_authoring_checks": [
+    {
+      "id": "D1",
+      "rise_from_nearest_road_metres": 1.485
+    },
+    {
+      "id": "D2",
+      "rise_from_nearest_road_metres": 1.625
+    },
+    {
+      "id": "D3",
+      "rise_from_nearest_road_metres": 1.535
+    },
+    {
+      "id": "D4",
+      "rise_from_nearest_road_metres": 1.585
+    },
+    {
+      "id": "D5",
+      "rise_from_nearest_road_metres": 1.875
+    },
+    {
+      "id": "D6",
+      "rise_from_nearest_road_metres": 1.385
+    }
+  ],
+  "defence_terrace_count": 6,
+  "lamp_checks": [
+    {
+      "post": "Vestergate / Lantern post",
+      "road_facing_dot": 1.0
+    },
+    {
+      "post": "Vestergate / Lantern post.001",
+      "road_facing_dot": 1.0
+    },
+    {
+      "post": "Vestergate / Lantern post.002",
+      "road_facing_dot": 1.0
+    },
+    {
+      "post": "Vestergate / Lantern post.003",
+      "road_facing_dot": 1.0
+    },
+    {
+      "post": "Vestergate / Lantern post.004",
+      "road_facing_dot": 1.0
+    },
+    {
+      "post": "Vestergate / Lantern post.005",
+      "road_facing_dot": 1.0
+    },
+    {
+      "post": "Vestergate / Lantern post.006",
+      "road_facing_dot": 1.0
+    }
+  ],
+  "removed_geometry_verified": [
+    "cobbles",
+    "ramps",
+    "vantage centre discs",
+    "D7",
+    "D8"
+  ],
   "lane_lengths_metres": {
     "left": 110.22,
     "centre": 102.12,
-    "right": 108.8
+    "right": 108.81
   },
   "native_scene": "Vestergate / Three-lane woodland blockout",
-  "mesh_object_count": 1948,
-  "no_runtime_or_roblox_collision_validation": true
+  "mesh_object_count": 1797,
+  "live_roblox_collision_and_jump_validation": false
 }

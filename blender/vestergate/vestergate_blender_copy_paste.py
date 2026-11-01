@@ -1,10 +1,10 @@
-"""Paste into Blender 4.3+ Text Editor and press Alt+P to build Vestergate.
+"""Paste into Blender 4.3+ Text Editor and press Alt+P to build Vestergate revision 02.
 
 Run from Blender's Text Editor, or:
   blender -b --python build_vestergate.py
 
 Creates a separate scene and preserves existing scenes. No external assets needed.
-Environment: ATHERIA_VESTERGATE_OUT, ATHERIA_VESTERGATE_RENDER=0/1,
+Output: ATHERIA_VESTERGATE_OUT; toggle RENDER below to enable renders.
 ATHERIA_VESTERGATE_SAMPLES=32, ATHERIA_VESTERGATE_VIEWS=overview,plan,...
 This is a visual/layout blockout, not a Roblox runtime map or collision export.
 """
@@ -15,13 +15,14 @@ import os
 import json
 from pathlib import Path
 from mathutils import Vector
+from mathutils.bvhtree import BVHTree
 from bpy_extras.object_utils import world_to_camera_view
 
 OUT = Path(os.environ.get('ATHERIA_VESTERGATE_OUT',
     bpy.path.abspath('//Vestergate_Blockout') if bpy.data.filepath
     else str(Path.home() / 'Vestergate_Blockout')))
 OUT.mkdir(parents=True, exist_ok=True)
-RENDER = False  # Change to True to render all five camera views after building.
+RENDER = False  # Set True to render all five camera views after building.
 SAMPLES = int(os.environ.get('ATHERIA_VESTERGATE_SAMPLES', '32'))
 rng = random.Random(2187)
 scene = bpy.data.scenes.new('Vestergate / Three-lane woodland blockout')
@@ -82,6 +83,22 @@ material('crystal pale', (.33,.88,1), roughness=.25, emission=.7)
 material('crystal dark', (.035,.26,.45), roughness=.25, metallic=.2, emission=.25)
 material('warm light', (1,.52,.12), roughness=.4, emission=3)
 water = material('water', (.055,.27,.33), roughness=.22, metallic=.25)
+material('dirt road', (.35,.25,.13), roughness=.96)
+def dirt_color(nodes, links):
+    geometry=nodes.new('ShaderNodeNewGeometry')
+    noise=nodes.new('ShaderNodeTexNoise');noise.inputs['Scale'].default_value=1.15
+    noise.inputs['Detail'].default_value=2
+    links.new(geometry.outputs['Position'],noise.inputs['Vector'])
+    ramp=nodes.new('ShaderNodeValToRGB')
+    ramp.color_ramp.elements[0].position=.2
+    ramp.color_ramp.elements[0].color=(.29,.195,.095,1)
+    ramp.color_ramp.elements[1].position=.8
+    ramp.color_ramp.elements[1].color=(.40,.29,.155,1)
+    links.new(noise.outputs['Fac'],ramp.inputs['Fac'])
+    return ramp.outputs['Color']
+dirt=materials['dirt road']
+dirt.node_tree.links.new(dirt_color(dirt.node_tree.nodes,dirt.node_tree.links),
+    dirt.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
 
 def mesh(name, verts, faces, mats, indices=None):
     data = bpy.data.meshes.new('Vestergate / ' + name)
@@ -178,10 +195,10 @@ def bridge_zone(x,y,pad=0):
     return abs(q.dot(BRIDGE_AXIS))<5.9+pad and abs(q.dot(BRIDGE_SIDE))<3+pad
 
 def trail_height(x,y):
-    return 4.13 if bridge_zone(x,y) else ground(x,y)+.10
+    return 4.13 if bridge_zone(x,y) else terrain_height(x,y)+.065
 
 # Rounded, irregular landscape slab. Coarse faceting is intentional at blockout stage.
-N, R = 128, 33
+N, R = 256, 65
 verts=[(0,6,ground(0,6))]
 for j in range(1,R+1):
     t=j/R
@@ -210,16 +227,21 @@ terrain=mesh('Grassland and terraced ridge foundation',verts,faces,
     ['grass','grass light','rock','rock shadow'],ids)
 for poly in terrain.data.polygons:
     if poly.material_index<2:poly.use_smooth=True
+TERRAIN_BVH=BVHTree.FromPolygons([v.co.copy() for v in terrain.data.vertices],
+    [tuple(p.vertices) for p in terrain.data.polygons])
+def terrain_height(x,y):
+    hit=TERRAIN_BVH.ray_cast(Vector((x,y,40)),Vector((0,0,-1)),80)
+    return hit[0].z if hit[0] is not None else ground(x,y)
 
 # Spline centre lines: distinct entries and no shared segment before the final apron.
 LANES = [
-    dict(id='left', label='Shaded woodland trail', material='woodland trail', width=4.8,
+    dict(id='left', label='Shaded woodland trail', material='dirt road', width=4.8,
          color='lane green', points=[(-40,57),(-44,42),(-35,29),(-39,16),
              (-25,6),(-20,-11),(-11,-23),(0,-31.8)]),
-    dict(id='centre', label='Old gate road', material='gate road', width=5.7,
+    dict(id='centre', label='Old gate road', material='dirt road', width=5.7,
          color='lane cream', points=[(0,65),(7,51),(4,38),(-1,26),
              (4,13),(0,0),(1,-17),(0,-31.8)]),
-    dict(id='right', label='Sunlit ridge trail', material='ridge trail', width=5.1,
+    dict(id='right', label='Sunlit ridge trail', material='dirt road', width=5.1,
          color='lane blue', points=[(45,55),(45,40),(44,34),(32,22),
              (35,12),(24,1),(22,-13),(11,-24),(0,-31.8)]),
 ]
@@ -254,50 +276,73 @@ def lane_distance(x,y):
         result=min(result,math.hypot(x-ax-dx*t,y-ay-dy*t)-half_width)
     return result
 
+def nearest_road_point(x,y):
+    best=None;distance=1e9
+    for ax,ay,dx,dy,inverse,half_width in LANE_SEGMENTS:
+        t=max(0,min(1,((x-ax)*dx+(y-ay)*dy)*inverse))
+        q=Vector((ax+dx*t,ay+dy*t));d=(q-Vector((x,y))).length_squared
+        if d<distance:distance=d;best=q
+    if y<-29:
+        for q in [Vector((0,-35.2)),Vector((0,-42))]:
+            d=(q-Vector((x,y))).length_squared
+            if d<distance:distance=d;best=q
+    return best
+
+# Paint matching dirt beneath the road ribbons and along their narrow shoulders.
+# This also prevents any residual terrain triangle from appearing green on a trail.
+clearance=terrain.data.attributes.new('Road clearance','FLOAT','POINT')
+for vertex,value in zip(terrain.data.vertices,clearance.data):
+    value.value=lane_distance(vertex.co.x,vertex.co.y)
+for index in range(2):
+    original=terrain.data.materials[index]
+    mat=original.copy();mat.name='Vestergate / Terrain '+original.name.rsplit(' / ',1)[-1]
+    nodes,links=mat.node_tree.nodes,mat.node_tree.links
+    bsdf=nodes.get('Principled BSDF');base=tuple(bsdf.inputs['Base Color'].default_value)
+    attribute=nodes.new('ShaderNodeAttribute');attribute.attribute_name='Road clearance'
+    threshold=nodes.new('ShaderNodeMath');threshold.operation='LESS_THAN'
+    threshold.inputs[1].default_value=.30
+    links.new(attribute.outputs['Fac'],threshold.inputs[0])
+    mix=nodes.new('ShaderNodeMixRGB');mix.inputs[1].default_value=base
+    links.new(threshold.outputs[0],mix.inputs[0])
+    links.new(dirt_color(nodes,links),mix.inputs[2])
+    links.new(mix.outputs[0],bsdf.inputs['Base Color'])
+    terrain.data.materials[index]=mat
+
 current='Trails'
 for lane in LANES:
-    samples=lane['samples'];vv=[];ff=[]
+    samples=lane['samples'];vv=[];ff=[];columns=13
     for i,p in enumerate(samples):
         tangent=(samples[min(i+1,len(samples)-1)]-samples[max(0,i-1)]).normalized()
         normal=Vector((-tangent.y,tangent.x))
         width=lane['width']*(1+.035*math.sin(i*.22))
-        for sign in [-1,1]:
+        for column in range(columns):
+            sign=-1+2*column/(columns-1)
             xy=p+normal*width*.5*sign
             # Tiny layer offsets prevent coplanar flicker where the final lanes meet.
             layer={'left':0,'centre':.008,'right':.016}[lane['id']]
             vv.append((xy.x,xy.y,trail_height(xy.x,xy.y)+layer))
         if i:
-            a=2*(i-1)
+            a=columns*(i-1)
             # The bridge supplies its own surface, with no dirt hovering over planks.
             midpoint=(samples[i]+samples[i-1])/2
             if not (lane['id']=='right' and bridge_zone(*midpoint)):
-                ff.append((a,a+2,a+3,a+1))
+                for column in range(columns-1):
+                    b=a+column;ff.append((b,b+columns,b+columns+1,b+1))
     # A shallow solid soil bed meets the terrain instead of floating like a decal.
     count=len(vv)
     vv += [(x,y,z-.28) for x,y,z in vv]
     solids=list(ff)
-    starts={f[0] for f in ff}
+    boundary={}
     for a,b,c,d in ff:
-        solids += [(a,a+count,b+count,b),(c,c+count,d+count,d),
-                   (d+count,c+count,b+count,a+count)]
-        if a-2 not in starts:solids.append((a,d,d+count,a+count))
-        if a+2 not in starts:solids.append((b,b+count,c+count,c))
+        solids.append((d+count,c+count,b+count,a+count))
+        for u,v in [(a,b),(b,c),(c,d),(d,a)]:
+            key=tuple(sorted((u,v)))
+            if key in boundary:boundary.pop(key)
+            else:boundary[key]=(u,v)
+    for a,b in boundary.values():solids.append((a,a+count,b+count,b))
     obj=mesh(lane['label']+' / walkable surface',vv,solids,[lane['material']])
     obj['Lane']=lane['id'];obj['Width metres']=lane['width']
     obj['Enemy route']=True
-
-# A restrained stone pattern makes the centre route visually different from dirt trails.
-for index,p in enumerate(LANES[1]['samples']):
-    if index%3:continue
-    if (p-Vector((0,-35.2))).length<8.2:continue
-    prev=LANES[1]['samples'][max(0,index-1)]
-    nxt=LANES[1]['samples'][min(index+1,len(LANES[1]['samples'])-1)]
-    tangent=(nxt-prev).normalized();normal=Vector((-tangent.y,tangent.x))
-    for offset in [-1.7,-.55,.65,1.75]:
-        xy=p+normal*(offset+rng.uniform(-.12,.12))
-        ob=box('Gate-road worn cobble',(xy.x,xy.y,ground(*xy)+.13),
-            (rng.uniform(.74,.96),rng.uniform(.65,.85),.085),rng.choice(['cobble','cobble dark']),.04)
-        ob.rotation_euler[2]=math.atan2(tangent.y,tangent.x)-math.pi/2+rng.uniform(-.12,.12)
 
 # Grassy rock-capped terraces: one solid rock mass plus an exposed flat upper shelf.
 TERRACES=[]
@@ -329,42 +374,22 @@ for i,(x,y,rx,ry,h) in enumerate([
 ]):
     terrace('Scenic forest escarpment %02d'%i,x,y,rx,ry,h,i*.7)
 
-# Each defence terrace has deliberately accessible sloped ground, not an isolated ledge.
+# Five relocated positions follow the user's red marks; the unmarked D4 is retained.
+# Short grass ledges are intended for jump access, without ramps or centre discs.
 PAD_SPECS=[
-    ('D1','Woodland bend',-25,26,4.4,5.0,3.1,math.pi/2),
-    ('D2','Lower woodland shelf',-34,-3,4.4,4.2,2.4,math.pi),
-    ('D3','Central overlook',-11,10,4.8,5.0,2.8,math.pi/2),
-    ('D4','Upper road shoulder',-12,39,4.6,4.8,3.0,math.pi/2),
-    ('D5','Ridge bridge overlook',23,28,4.5,4.5,2.6,math.pi/2),
-    ('D6','Lower ridge shoulder',13,-7,4.0,4.3,2.2,math.pi/2),
-    ('D7','Gate-side west terrace',-20,-30,4.8,4.3,1.5,math.pi),
-    ('D8','Gate-side east terrace',21,-30,4.8,4.3,1.5,0),
+    ('D1','Woodland bend',-28,17,3.7,3.9,1.55),
+    ('D2','Lower woodland shelf',-31.5,0,4.1,4.0,1.45),
+    ('D3','Central overlook',-5.5,13,4.8,5.0,1.60),
+    ('D4','Upper road shoulder',-12,39,4.6,4.8,1.65),
+    ('D5','Ridge bend overlook',25,12,3.6,3.8,.80),
+    ('D6','Lower ridge shoulder',13,-11,4.0,4.3,1.45),
 ]
-PADS=[];RAMPS=[]
+PADS=[]
 current='Defence vantages'
-for index,(pid,name,x,y,rx,ry,height,angle) in enumerate(PAD_SPECS):
+for index,(pid,name,x,y,rx,ry,height) in enumerate(PAD_SPECS):
     z=terrace(pid+' / '+name,x,y,rx,ry,height,index*.2)
-    direction=Vector((math.cos(angle),math.sin(angle)))
-    side=Vector((-direction.y,direction.x))
-    radius=1/math.sqrt((direction.x/rx)**2+(direction.y/ry)**2)
-    top=Vector((x,y))+direction*(radius*.65)
-    landing=Vector((x,y))+direction*(radius*1.32)
-    bottom=Vector((x,y))+direction*(radius+height*2.7+2)
-    bz=ground(*bottom)+.035
-    # Broad grassy ramps sit partly inside the solid shelf so they have no top gap.
-    vv=[]
-    for center,zz in [(top,z+.025),(landing,z+.025),(bottom,bz)]:
-        for sign in [-1,1]:
-            q=center+side*1.4*sign;vv.append((q.x,q.y,zz))
-    vv += [(a,b,ground(a,b)-.1) for a,b,c in vv]
-    mesh(pid+' / accessible grass ramp',vv,[(0,2,3,1),(2,4,5,3),
-        (0,6,7,1),(4,5,11,10),(0,2,8,6),(2,4,10,8),
-        (1,7,9,3),(3,9,11,5)],['grass light','rock'],[0,0,1,1,1,1,1,1])
-    RAMPS.append((top,bottom,1.65))
-    cylinder(pid+' / flat defence footprint',(x,y,z+.045),1.7,.075,'placement stone',24)
-    ring(pid+' / footprint edge',(x,y,z+.087),1.57,.075,'stone light')
     PADS.append(dict(id=pid,name=name,x=x,y=y,z=z,rx=rx,ry=ry,
-        footprint_radius=1.7,ramp_top=[*top,z],ramp_landing=[*landing,z],ramp_bottom=[*bottom,bz]))
+        access='jump',ledge_height=height))
 
 # Right lane bridge: a visible crossing over a small recessed stream cut.
 current='Bridge'
@@ -451,7 +476,7 @@ crest.rotation_euler[1]=math.pi/4
 # Defended objective and player staging space directly outside the closed gate.
 current='Crystal and spawn'
 CX,CY=0,-35.2
-cylinder('Crystal apron',(CX,CY,.08),8.0,.20,'gate road',48)
+cylinder('Crystal apron',(CX,CY,.08),8.0,.20,'dirt road',48)
 for radius,z,depth,mat in [(3.1,.16,.32,'stone dark'),(2.75,.42,.24,'stone light'),
                           (2.3,.65,.22,'stone'),(1.45,.86,.22,'gold')]:
     cylinder('Crystal stepped plinth',(CX,CY,z),radius,depth,mat,12)
@@ -468,7 +493,7 @@ for i in range(3):
     crystal('Orbiting crystal shard',CX+1.65*math.cos(a),CY+1.65*math.sin(a),2.45,.24,1.05)
 cylinder('Player spawn paving',(0,-43.05,.075),2.25,.15,'stone light',24)
 ring('Player spawn inset',(0,-43.05,.16),1.95,.075,'gold')
-box('Gate staging paving',(0,-42,.025),(11,10,.05),'gate road')
+box('Gate staging paving',(0,-42,.025),(11,10,.05),'dirt road')
 SPAWN=(0,-43.05,.16)
 
 def is_clear(x,y,margin=0):
@@ -477,8 +502,6 @@ def is_clear(x,y,margin=0):
     for pad in PADS:
         if ((x-pad['x'])/(pad['rx']+margin+1))**2+((y-pad['y'])/(pad['ry']+margin+1))**2<1:
             return False
-    for a,b,width in RAMPS:
-        if distance_segment(Vector((x,y)),a,b)<width+margin:return False
     return True
 
 # Broad planting masses are deliberately kept away from the lane surfaces.
@@ -520,7 +543,7 @@ current='Ground greenery'
 gv=[];gf=[];gi=[]
 for i in range(2200):
     x=rng.uniform(-59,59);y=rng.uniform(-39,70)
-    if not is_clear(x,y,.42):continue
+    if not is_clear(x,y,.90):continue
     z=surface(x,y)+.025
     for j in range(5):
         a=rng.random()*math.tau;h=rng.uniform(.25,.65);w=rng.uniform(.09,.19)
@@ -531,18 +554,18 @@ for i in range(2200):
 mesh('Grass tufts / clustered edge planting',gv,gf,['grass light','grass rim','fern'],gi)
 for i in range(120):
     x=rng.uniform(-58,58);y=rng.uniform(-38,69)
-    if not is_clear(x,y,1.0):continue
+    if not is_clear(x,y,1.65):continue
     z=surface(x,y);r=rng.uniform(.5,1.25)
     ico('Low shrub',(x,y,z+r*.35),(r,r*.85,r*.65),rng.choice(['leaf teal','leaf green','fern']),1)
 for i in range(110):
     x=rng.uniform(-58,58);y=rng.uniform(-40,68)
-    if not is_clear(x,y,.7):continue
+    if not is_clear(x,y,1.4):continue
     z=surface(x,y);r=rng.uniform(.3,1.05)
     ico('Ground rock',(x,y,z+.12),(r,r*.76,r*.65),rng.choice(['rock','rock light']),1)
 # Long leaves, flowers and a few hanging vines communicate the reference's greenery.
 for i in range(80):
     x=rng.uniform(-54,54);y=rng.uniform(-36,63)
-    if not is_clear(x,y,.75):continue
+    if not is_clear(x,y,1.65):continue
     z=surface(x,y);vv=[];ff=[]
     for j in range(7):
         a=j*math.tau/7+rng.random()*.3;length=rng.uniform(.65,1.4)
@@ -553,7 +576,7 @@ for i in range(80):
     mesh('Broad-leaf ground plant',vv,ff,['fern'])
 for i in range(170):
     x=rng.uniform(-51,51);y=rng.uniform(-35,62)
-    if not is_clear(x,y,.5):continue
+    if not is_clear(x,y,.9):continue
     z=surface(x,y)
     for j in range(3):
         dx,dy=rng.uniform(-.35,.35),rng.uniform(-.35,.35)
@@ -568,11 +591,17 @@ for x,y,rx,ry,z in TERRACES[:9]:
             ico('Trailing cliff vine',(px+.1*math.sin(j),py,zz),(.23,.12,.25),'leaf teal',1)
 
 current='Landmarks'
+LAMPS=[]
 def lantern(x,y,z):
-    beam('Lantern post',(x,y,z),(x,y,z+2.7),.17)
-    beam('Lantern bracket',(x,y,z+2.7),(x+.65,y,z+2.7),.15)
-    box('Lantern glowing pane',(x+.6,y,z+2.23),(.27,.27,.42),'warm light')
-    for zz in [z+1.96,z+2.5]:box('Lantern iron cap',(x+.6,y,zz),(.42,.42,.09),'iron')
+    target=nearest_road_point(x,y);direction=(target-Vector((x,y))).normalized()
+    reach=Vector((x,y))+direction*.65;hang=Vector((x,y))+direction*.60
+    post=beam('Lantern post',(x,y,z),(x,y,z+2.7),.17)
+    post['Road target']=[*target];post['Facing direction']=[*direction]
+    beam('Lantern bracket',(x,y,z+2.7),(*reach,z+2.7),.15)
+    pane=box('Lantern glowing pane',(*hang,z+2.23),(.27,.27,.42),'warm light')
+    post['Lantern pane']=pane.name
+    for zz in [z+1.96,z+2.5]:box('Lantern iron cap',(*hang,zz),(.42,.42,.09),'iron')
+    LAMPS.append(dict(position=[x,y,z],road_target=[*target],facing=[*direction]))
 for x,y in [(-30,10),(-30,35),(-5,-20),(7,26),(28,15),(28,-6),(-5,-40),(5,-40)]:
     if lane_distance(x,y)>.25:lantern(x,y,ground(x,y))
 
@@ -603,7 +632,7 @@ def figure(x,y,z):
     for dx in [-.34,.34]:
         beam('1.8m figure arm',(x+dx*.8,y,z+1.38),(x+dx,y,z+.91),.12,'scale figure')
 figure(*SPAWN)
-figure(-11,10,PADS[2]['z']+.09)
+figure(PADS[2]['x'],PADS[2]['y'],PADS[2]['z']+.02)
 figure(37,27,4.25)
 
 current='Lighting'
@@ -640,7 +669,8 @@ scene.render.engine='CYCLES';scene.cycles.samples=SAMPLES
 scene.cycles.use_denoising=False
 scene.cycles.max_bounces=5;scene.cycles.diffuse_bounces=2;scene.cycles.glossy_bounces=2
 scene.render.threads_mode='FIXED';scene.render.threads=8
-scene.render.resolution_x=1600;scene.render.resolution_y=1200;scene.render.resolution_percentage=100
+scene.render.resolution_x=1600;scene.render.resolution_y=1200
+scene.render.resolution_percentage=int(os.environ.get('ATHERIA_VESTERGATE_RESOLUTION_PERCENT','100'))
 scene.render.image_settings.file_format='PNG'
 scene.render.film_transparent=False
 scene.view_settings.view_transform='AgX'
@@ -670,17 +700,9 @@ for pad in PADS:
             u=q.normalized()
             edge=1/math.sqrt((u.x/pad['rx'])**2+(u.y/pad['ry'])**2)
             clear=min(clear,q.length-edge*1.15-lane['width']/2)
-    ramp_clear=min(lane_distance(
-        pad['ramp_top'][0]+(pad['ramp_bottom'][0]-pad['ramp_top'][0])*i/30,
-        pad['ramp_top'][1]+(pad['ramp_bottom'][1]-pad['ramp_top'][1])*i/30)-1.65
-        for i in range(31))
     checks.append(dict(id=pad['id'],minimum_lane_clearance_metres=round(clear,3),
-        minimum_ramp_lane_clearance_metres=round(ramp_clear,3),
-        ramp_gradient=round((pad['z']-pad['ramp_bottom'][2]) /
-            (Vector(pad['ramp_landing'][:2])-Vector(pad['ramp_bottom'][:2])).length,3)))
+        access='jump',ledge_height_metres=pad['ledge_height']))
     assert clear>.05, 'Defence terrace overlaps a trail: '+pad['id']+' '+str(clear)
-    assert ramp_clear>.05, 'Defence access ramp overlaps a trail: '+pad['id']+' '+str(ramp_clear)
-    assert checks[-1]['ramp_gradient']<.60, 'Ramp too steep: '+pad['id']
 lengths={}
 for lane in LANES:
     pp=[Vector((p.x,p.y,trail_height(*p))) for p in lane['samples']]
@@ -691,7 +713,9 @@ manifest=dict(stage='Blender visual blockout; not connected to Roblox',
     lane_lengths_metres=lengths,
     lanes=[dict(id=l['id'],name=l['label'],width=l['width'],
         centreline=[[round(p.x,4),round(p.y,4),round(trail_height(*p),4)] for p in l['samples']]) for l in LANES],
-    defence_terraces=PADS,tree_count=len(TREE_POSITIONS),
+    defence_terraces=PADS,tree_count=len(TREE_POSITIONS),lamps=LAMPS,
+    roads='Dirt surfaces conformed to actual terrain, with matching dirt shoulders',
+    removed_vantages=['D7','D8'],revision=2,
     scale_figure_height_metres=1.83,checks=checks,
     live_roblox_validation=False)
 (OUT/'VESTERGATE_LAYOUT.json').write_text(json.dumps(manifest,indent=2))
@@ -706,7 +730,7 @@ for key,cam in CAMERAS.items():
         p=world_to_camera_view(scene,cam,Vector(pos))
         projections[key][name]=[round(p.x,6),round(1-p.y,6),round(p.z,4)]
 (OUT/'CAMERA_ANNOTATIONS.json').write_text(json.dumps(projections,indent=2))
-scene['Blockout validation']='8 accessible terraces; three measured routes; see VESTERGATE_LAYOUT.json'
+scene['Blockout validation']='6 jump-access grass terraces; three dirt routes; see VESTERGATE_LAYOUT.json'
 scene.render.filepath=str(OUT/'vestergate_overview.png')
 bpy.ops.wm.save_as_mainfile(filepath=str(OUT/'vestergate_blockout.blend'))
 print('VESTERGATE_SAVED',str(OUT),json.dumps(lengths),flush=True)

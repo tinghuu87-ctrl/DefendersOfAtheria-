@@ -1,0 +1,102 @@
+{
+  "blender_version": "4.3.2",
+  "samples": 96,
+  "samples_by_view": {
+    "overview": 96,
+    "plan": 32,
+    "arrival": 48,
+    "gate": 48,
+    "woodland": 48,
+    "centre": 48,
+    "ridge": 48
+  },
+  "resolution": [
+    1920,
+    1440
+  ],
+  "resolution_percent": 100,
+  "denoising": false,
+  "rendered_views": [
+    "overview",
+    "plan",
+    "arrival",
+    "gate",
+    "woodland",
+    "centre",
+    "ridge"
+  ],
+  "cameras": {
+    "overview": {
+      "position": [
+        108.0,
+        133.0,
+        119.0
+      ],
+      "lens": 35.0,
+      "type": "ORTHO"
+    },
+    "plan": {
+      "position": [
+        0.0,
+        6.0,
+        170.0
+      ],
+      "lens": 35.0,
+      "type": "ORTHO"
+    },
+    "arrival": {
+      "position": [
+        0.0,
+        -44.5,
+        3.799999952316284
+      ],
+      "lens": 26.0,
+      "type": "PERSP"
+    },
+    "gate": {
+      "position": [
+        35.0,
+        -7.0,
+        19.0
+      ],
+      "lens": 32.0,
+      "type": "PERSP"
+    },
+    "woodland": {
+      "position": [
+        -62.0,
+        1.0,
+        26.0
+      ],
+      "lens": 35.0,
+      "type": "PERSP"
+    },
+    "centre": {
+      "position": [
+        18.0,
+        52.0,
+        24.0
+      ],
+      "lens": 34.0,
+      "type": "PERSP"
+    },
+    "ridge": {
+      "position": [
+        53.0,
+        38.0,
+        34.0
+      ],
+      "lens": 36.0,
+      "type": "PERSP"
+    }
+  },
+  "linked_libraries": [
+    "Libraries/Atheria_Portal_Library.blend"
+  ],
+  "native_file": "vestergate_render_ready.blend",
+  "postprocessing": {
+    "denoiser": "Intel Open Image Denoise 1.4.3",
+    "input": "RGB render",
+    "feature_guides": false
+  }
+}

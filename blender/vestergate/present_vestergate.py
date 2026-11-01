@@ -20,7 +20,7 @@ INK='#e7e8d6';MUTED='#a8b9b3';GOLD='#d2b46b';BG='#111f23'
 COLORS={'left':'#a5dfac','centre':'#f0d48a','right':'#91d3f2'}
 PAGES=[
     ('overview','Battlefield overview','Three approaches through a terraced woodland to the defended kingdom gate.'),
-    ('plan','Three lanes / eight defence terraces','Gate at south. Enemy trails enter from north and converge at the crystal apron.'),
+    ('plan','Three dirt lanes / six grass vantages','Five positions relocated from the red marks; the unmarked upper position is retained.'),
     ('arrival','Standing outside the gates','Player-height view from the spawn paving, looking outward past the defended crystal.'),
     ('gate','The defended objective','Closed wooden gates, flanking bastions, kingdom walls and the crystal courtyard.'),
     ('ridge','Ridge crossing and elevated ground','Timber bridge over a recessed stream cut; clear ground on the nearby defence shelves.'),
@@ -85,7 +85,7 @@ for index,(key,title,caption) in enumerate(PAGES,1):
     d.line((82,1351,1718,1351),fill='#385054',width=2)
     d.text((83,1370),caption,font=font(19),fill=INK)
     if key=='plan':
-        d.text((83,1409),'D1–D8: flat defence footprints with grass access ramps.',font=font(18),fill=MUTED)
+        d.text((83,1409),'D1–D6: clear grass ledges for jump access. Crystal-side positions D7 and D8 removed.',font=font(18),fill=MUTED)
         lengths=layout['lane_lengths_metres']
         d.text((83,1443),f'Authored route lengths: woodland {lengths["left"]:.0f} m / gate road {lengths["centre"]:.0f} m / ridge {lengths["right"]:.0f} m. Combat balance pending.',font=font(17),fill=MUTED)
     else:

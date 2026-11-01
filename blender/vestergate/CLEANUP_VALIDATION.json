@@ -1,0 +1,10 @@
+{
+  "terrain_closed_connected_solid": true,
+  "connected_defence_ledges": 6,
+  "grounded_trees": 69,
+  "unsupported_scenery": 0,
+  "grey_characters": 0,
+  "checked_plant_faces": 9247,
+  "cliff_materials_preserved": true,
+  "road_and_portal_geometry_checked_separately": true
+}

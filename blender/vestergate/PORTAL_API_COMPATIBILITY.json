@@ -1,0 +1,93 @@
+{
+  "legacy": {
+    "blender_version": "4.3.2",
+    "design_count": 3,
+    "standalone_or_map": "map",
+    "portals": [
+      {
+        "lane": "left",
+        "design": "Thornrift",
+        "road_facing_dot": 1.0,
+        "clear_body_probes": 18,
+        "grounded_markers": [
+          "EnemySpawn",
+          "FirstWaypoint"
+        ],
+        "animation_loop_frames": 120
+      },
+      {
+        "lane": "centre",
+        "design": "Voidmaw",
+        "road_facing_dot": 1.0,
+        "clear_body_probes": 18,
+        "grounded_markers": [
+          "EnemySpawn",
+          "FirstWaypoint"
+        ],
+        "animation_loop_frames": 120
+      },
+      {
+        "lane": "right",
+        "design": "Stormscar",
+        "road_facing_dot": 1.0,
+        "clear_body_probes": 18,
+        "grounded_markers": [
+          "EnemySpawn",
+          "FirstWaypoint"
+        ],
+        "animation_loop_frames": 120
+      }
+    ],
+    "roblox_spawning_and_vfx_integration": false
+  },
+  "modern": {
+    "blender_version": "5.0.1",
+    "design_count": 3,
+    "standalone_or_map": "map",
+    "portals": [
+      {
+        "lane": "left",
+        "design": "Thornrift",
+        "road_facing_dot": 1.0,
+        "clear_body_probes": 18,
+        "grounded_markers": [
+          "EnemySpawn",
+          "FirstWaypoint"
+        ],
+        "animation_loop_frames": 120
+      },
+      {
+        "lane": "centre",
+        "design": "Voidmaw",
+        "road_facing_dot": 1.0,
+        "clear_body_probes": 18,
+        "grounded_markers": [
+          "EnemySpawn",
+          "FirstWaypoint"
+        ],
+        "animation_loop_frames": 120
+      },
+      {
+        "lane": "right",
+        "design": "Stormscar",
+        "road_facing_dot": 1.0,
+        "clear_body_probes": 18,
+        "grounded_markers": [
+          "EnemySpawn",
+          "FirstWaypoint"
+        ],
+        "animation_loop_frames": 120
+      }
+    ],
+    "roblox_spawning_and_vfx_integration": false
+  },
+  "modern_standalone": {
+    "blender_version": "5.0.1",
+    "design_count": 3,
+    "standalone_or_map": "standalone",
+    "portals": [],
+    "roblox_spawning_and_vfx_integration": false
+  },
+  "original_error_reproduced": true,
+  "partial_build_recovery": true
+}

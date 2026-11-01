@@ -1,0 +1,3 @@
+# Atheria reusable asset catalog
+VERSION 1
+b750b98f-12e8-43d4-98c9-89434be233ad:Atheria/Enemy Portals:Enemy Portals

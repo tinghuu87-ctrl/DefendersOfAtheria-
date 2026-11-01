@@ -1,0 +1,30 @@
+{
+  "blender_version": "4.3.2",
+  "render_cameras": 7,
+  "dirt_lanes": 3,
+  "grass_ledges": 6,
+  "shared_portals": 3,
+  "closed_gate_planks": 16,
+  "linked_libraries": [
+    "Libraries/Atheria_Portal_Library.blend"
+  ],
+  "crystal_in_frame": {
+    "overview": [
+      0.368051,
+      0.635118,
+      228.872925
+    ],
+    "gate": [
+      0.614387,
+      0.386609,
+      46.993378
+    ],
+    "arrival": [
+      0.5,
+      0.503637,
+      9.31081
+    ]
+  },
+  "embedded_render_script": true,
+  "portable_native_file": true
+}

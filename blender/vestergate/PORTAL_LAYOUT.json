@@ -1,0 +1,56 @@
+{
+  "designs": [
+    "Thornrift",
+    "Voidmaw",
+    "Stormscar"
+  ],
+  "portals": [
+    {
+      "lane": "left",
+      "design": "Thornrift",
+      "position": [
+        -40.0,
+        57.00000762939453,
+        -0.904693603515625
+      ],
+      "forward": [
+        -0.28946825861930847,
+        -0.9571876525878906
+      ],
+      "aperture_diameter": 6.8
+    },
+    {
+      "lane": "centre",
+      "design": "Voidmaw",
+      "position": [
+        3.667978276666872e-08,
+        65.00000762939453,
+        1.8106002807617188
+      ],
+      "forward": [
+        0.4677933156490326,
+        -0.8838379383087158
+      ],
+      "aperture_diameter": 6.8
+    },
+    {
+      "lane": "right",
+      "design": "Stormscar",
+      "position": [
+        45.0,
+        55.000003814697266,
+        4.107780456542969
+      ],
+      "forward": [
+        0.002818620763719082,
+        -0.9999960660934448
+      ],
+      "aperture_diameter": 6.8
+    }
+  ],
+  "animation_frames": [
+    1,
+    120
+  ],
+  "stage": "Blender visual assets; Roblox spawning and VFX integration pending"
+}

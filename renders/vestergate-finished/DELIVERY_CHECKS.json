@@ -1,0 +1,22 @@
+{
+  "relocated_native_opens": true,
+  "all_linked_libraries_resolve_locally": true,
+  "shared_portal_placements": 3,
+  "embedded_script_persists": true,
+  "external_images_missing": 0,
+  "rendered_views": [
+    "overview",
+    "plan",
+    "arrival",
+    "gate",
+    "woodland",
+    "centre",
+    "ridge"
+  ],
+  "image_resolution": [
+    1920,
+    1440
+  ],
+  "image_count": 7,
+  "pdf_pages": 7
+}

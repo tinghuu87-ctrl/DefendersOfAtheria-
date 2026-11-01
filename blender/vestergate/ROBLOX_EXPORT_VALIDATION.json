@@ -1,0 +1,27 @@
+{
+  "blender_version": "4.3.2",
+  "source_mesh_instances": 1967,
+  "realised_collection_meshes": 176,
+  "reimported_mesh_parts": 1970,
+  "triangle_count": 159065,
+  "max_triangles_per_mesh": 9000,
+  "texture_atlases": 12,
+  "test_texture_size": 128,
+  "source_geometry_triangle_count_matches": true,
+  "external_textures_missing": [],
+  "game_import_tested": false,
+  "blender_5_representative_map_export": "passed",
+  "blender_5_state_restoration": {
+    "blender_version": "5.0.1",
+    "scene_selection_mode_and_subframe_restored": true,
+    "temporary_objects_meshes_materials_scenes_removed": true,
+    "source_fake_user_preserved": true
+  },
+  "rgba_alpha_matches_alpha_map": true,
+  "neutral_fbx_emission_check": {
+    "blender_version": "5.0.1",
+    "fbx_emissive_texture_connections": 0,
+    "fbx_emissive_factor": 0,
+    "baked_glow_mask_preserved": true
+  }
+}

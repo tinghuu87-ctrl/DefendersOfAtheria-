@@ -2,6 +2,8 @@
 
 ## Blockout follow-through
 
+Revision 02 follows the user's marked layout: all three roads and the gate-side approach are dirt, terrain/vegetation breakthrough has been addressed, lamps face the roads, ramps and centre discs are removed, and six low grass vantages remain. D1/D2/D3/D5/D6 move to the five marked areas; unmarked D4 retains its horizontal location; the two crystal-side positions D7/D8 are removed. The observations below describe the original reference, including its cobbles, and remain reference context rather than the current material specification.
+
 The subsequent Blender blockout is authored in `blender/vestergate/`, with review renders in `renders/vestergate/`. It develops the planning proposals below into editable terrain, three trails, accessible defence shelves, foliage masses, the crystal courtyard, and kingdom gates. The original observations and undecided gameplay questions remain useful design context.
 
 ## Scope and confirmed layout
