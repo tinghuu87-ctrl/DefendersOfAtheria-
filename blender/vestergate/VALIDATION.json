@@ -1,0 +1,67 @@
+{
+  "kind": "Blender actual-mesh support and layout checks",
+  "support_mesh_count": 251,
+  "route_support_samples": 1329,
+  "max_sample_raise_metres": 0.455,
+  "max_sample_drop_metres": 0.3129,
+  "route_support_issues": [],
+  "terrace_checks": [
+    {
+      "id": "D1",
+      "minimum_lane_clearance_metres": 2.62,
+      "minimum_ramp_lane_clearance_metres": 5.919,
+      "ramp_gradient": 0.349
+    },
+    {
+      "id": "D2",
+      "minimum_lane_clearance_metres": 4.269,
+      "minimum_ramp_lane_clearance_metres": 10.46,
+      "ramp_gradient": 0.328
+    },
+    {
+      "id": "D3",
+      "minimum_lane_clearance_metres": 5.016,
+      "minimum_ramp_lane_clearance_metres": 5.568,
+      "ramp_gradient": 0.347
+    },
+    {
+      "id": "D4",
+      "minimum_lane_clearance_metres": 6.576,
+      "minimum_ramp_lane_clearance_metres": 11.478,
+      "ramp_gradient": 0.344
+    },
+    {
+      "id": "D5",
+      "minimum_lane_clearance_metres": 3.026,
+      "minimum_ramp_lane_clearance_metres": 8.18,
+      "ramp_gradient": 0.338
+    },
+    {
+      "id": "D6",
+      "minimum_lane_clearance_metres": 2.865,
+      "minimum_ramp_lane_clearance_metres": 5.787,
+      "ramp_gradient": 0.33
+    },
+    {
+      "id": "D7",
+      "minimum_lane_clearance_metres": 3.706,
+      "minimum_ramp_lane_clearance_metres": 9.576,
+      "ramp_gradient": 0.325
+    },
+    {
+      "id": "D8",
+      "minimum_lane_clearance_metres": 3.287,
+      "minimum_ramp_lane_clearance_metres": 8.806,
+      "ramp_gradient": 0.325
+    }
+  ],
+  "defence_footprint_count": 8,
+  "lane_lengths_metres": {
+    "left": 110.22,
+    "centre": 102.12,
+    "right": 108.8
+  },
+  "native_scene": "Vestergate / Three-lane woodland blockout",
+  "mesh_object_count": 1948,
+  "no_runtime_or_roblox_collision_validation": true
+}

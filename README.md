@@ -10,6 +10,7 @@ This repository contains the editable Blender lobby, Roblox Studio installation 
 
 - **Editable lobby:** [blender/atheria_lobby.blend](blender/atheria_lobby.blend). This is revision 08, with the Festival Court sign removed.
 - **Finished tavern interior:** [blender/tavern/atheria_tavern_finished.blend](blender/tavern/atheria_tavern_finished.blend) · [views](renders/tavern-finished/tavern_finished_views.pdf) · [notes](blender/tavern/README_FINISHED.md). Expanded room with materials, lighting, props, and a blank leaderboard.
+- **Vestergate battlefield blockout:** [blender/vestergate/vestergate_blockout.blend](blender/vestergate/vestergate_blockout.blend) · [layout notes](blender/vestergate/README.md). Three woodland approaches, accessible defence terraces, a ridge bridge, and the defended crystal outside the kingdom gates.
 - **Texture exporter:** [blender/export_roblox.py](blender/export_roblox.py).
 - **Studio setup order:** [docs/STUDIO_SETUP.md](docs/STUDIO_SETUP.md).
 - **Campaign artwork:** [art/atlas/atheria_simple_atlas.png](art/atlas/atheria_simple_atlas.png).
