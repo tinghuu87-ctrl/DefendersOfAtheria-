@@ -11,7 +11,7 @@ This repository contains the editable Blender lobby, Roblox Studio installation 
 - **Editable lobby:** [blender/atheria_lobby.blend](blender/atheria_lobby.blend). This is revision 08, with the Festival Court sign removed.
 - **Texture exporter:** [blender/export_roblox.py](blender/export_roblox.py).
 - **Studio setup order:** [docs/STUDIO_SETUP.md](docs/STUDIO_SETUP.md).
-- **Campaign artwork:** [art/atlas/atheria_refined_atlas.png](art/atlas/atheria_refined_atlas.png).
+- **Campaign artwork:** [art/atlas/atheria_simple_atlas.png](art/atlas/atheria_simple_atlas.png).
 - **Town views:** [renders/town/atheria_town_views.pdf](renders/town/atheria_town_views.pdf).
 
 ## Project contents
@@ -44,4 +44,4 @@ The exporter bakes procedural base colors into PNG atlases and writes `Atheria_R
 
 ## Artwork and references
 
-The refined atlas background was AI-generated for this project. Mission names and descriptions are concept names. The repository contains generated project assets, not the uploaded reference recordings or their extracted frames.
+The reference-style atlas background was AI-generated for this project. Mission names and descriptions are concept names. The repository contains generated project assets, not the uploaded reference recordings or their extracted frames.

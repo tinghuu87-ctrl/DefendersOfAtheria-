@@ -26,8 +26,8 @@ Save a copy of your place before applying installers. Run `.lua` files by copyin
 ## Battle Gate atlas
 
 1. Run `roblox/ui/install_battle_gate_ui.lua`. The current installer includes an independent walk-in detector and keeps movement available. It creates the runtime LocalScripts in StarterPlayerScripts.
-2. Upload `art/atlas/atheria_refined_atlas.png` to Roblox as an image asset.
-3. Paste its image asset ID into `ATLAS_IMAGE_ID` in `roblox/ui/refine_atheria_atlas.lua`, then run that complete script. This installs the illustrated background, new destination names, finer trails and circular marker styling.
+2. Upload `art/atlas/atheria_simple_atlas.png` to Roblox as an image asset.
+3. Paste its image asset ID into `ATLAS_IMAGE_ID` in `roblox/ui/simplify_atheria_atlas.lua`, then run that complete script. This installs the simpler overhead atlas, Atheria destination names, finer trails and circular marker styling.
 4. Save, start a **fresh Play session**, and enter the Battle Gate circle. The atlas should open when you enter and close when you leave. Its X button and M also close it.
 
 For installations made from earlier chat scripts, `repair_gate_ui_and_collision.lua` repairs the UI initialization and installs the independent walk-in detector while reapplying collision fidelity to the selected import. `enable_walk_in_battle_gate.lua` is the earlier migration and normally isn't needed with the current installer.
