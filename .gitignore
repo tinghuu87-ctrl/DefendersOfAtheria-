@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+__pycache__/
+*.py[cod]
+*.blend1
+*.blend2
+*.log
+.env
+.env.*
+!.env.example
+Atheria_Roblox_Export/
+Town_Renders/

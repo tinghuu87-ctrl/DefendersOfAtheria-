@@ -1,0 +1,359 @@
+{
+  "walls": {
+    "wall_meshes": [
+      {
+        "name": "V05 Continuous wall foundations",
+        "nonmanifold_edges": 0,
+        "volume": 161.0524471132063
+      },
+      {
+        "name": "V05 Joined masonry wall network",
+        "nonmanifold_edges": 0,
+        "volume": 978.0009399237337
+      },
+      {
+        "name": "V05 Continuous coping and corner caps",
+        "nonmanifold_edges": 0,
+        "volume": 104.05295947881717
+      }
+    ],
+    "wall_road_intersections": [],
+    "foliage_intersections": [],
+    "wall_join_probes": [
+      {
+        "xy": [
+          -37.5,
+          -29
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.82
+      },
+      {
+        "xy": [
+          -20.1,
+          -29
+        ],
+        "surface": "Carved sign: WELCOME TO ATHERIA",
+        "height": 3.425
+      },
+      {
+        "xy": [
+          -11.5,
+          -29
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.42
+      },
+      {
+        "xy": [
+          38,
+          -29
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.82
+      },
+      {
+        "xy": [
+          -37.5,
+          -4
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.82
+      },
+      {
+        "xy": [
+          38,
+          -4
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.82
+      },
+      {
+        "xy": [
+          -3,
+          -29
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.42
+      },
+      {
+        "xy": [
+          -3,
+          31
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 5.62
+      },
+      {
+        "xy": [
+          -32.9,
+          31
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 5.62
+      },
+      {
+        "xy": [
+          33.6,
+          31.5
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 5.62
+      },
+      {
+        "xy": [
+          -22.7,
+          -4
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.32
+      },
+      {
+        "xy": [
+          -13.4,
+          -4
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.32
+      },
+      {
+        "xy": [
+          -3,
+          10.5
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.32
+      },
+      {
+        "xy": [
+          -3,
+          19.5
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.32
+      },
+      {
+        "xy": [
+          10.5,
+          -4
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.32
+      },
+      {
+        "xy": [
+          19.5,
+          -4
+        ],
+        "surface": "V05 Continuous coping and corner caps",
+        "height": 3.32
+      },
+      {
+        "xy": [
+          -3,
+          -13.7
+        ],
+        "surface": "Garden lane voussoir.002",
+        "height": 6.794
+      },
+      {
+        "xy": [
+          -3,
+          -20.3
+        ],
+        "surface": "Garden lane voussoir.008",
+        "height": 6.794
+      }
+    ],
+    "bow_axis_in_statue_space": [
+      -0.8191520571708679,
+      -2.58286746657177e-07,
+      0.5735763907432556
+    ],
+    "cat_wall_intersections": [],
+    "passed": true
+  },
+  "roads": {
+    "road_connected_components": 1,
+    "watertight_road": true,
+    "volume_m3": 146.35379345703086,
+    "boundary_contours": 4,
+    "simple_Roblox_arms": 4,
+    "sword_and_bow_present": true,
+    "prototype_sign_removed": true,
+    "assemblies_checked_against_road": 44,
+    "walkway_obstructions": [],
+    "crystal_promenade_join_probes": [
+      [
+        4.8,
+        4.6,
+        0.34
+      ],
+      [
+        5.2,
+        5,
+        0.34
+      ],
+      [
+        6,
+        6,
+        0.34
+      ],
+      [
+        0,
+        15,
+        0.34
+      ],
+      [
+        1,
+        15,
+        0.34
+      ],
+      [
+        2.5,
+        15,
+        0.34
+      ],
+      [
+        17,
+        6,
+        0.34
+      ],
+      [
+        17.2,
+        5.5,
+        0.34
+      ],
+      [
+        17.5,
+        3,
+        0.34
+      ],
+      [
+        18,
+        1,
+        0.34
+      ],
+      [
+        12,
+        22,
+        0.34
+      ],
+      [
+        12,
+        23,
+        0.34
+      ],
+      [
+        12,
+        24.5,
+        0.34
+      ]
+    ],
+    "passed": true
+  },
+  "routes": {
+    "objects": 1205,
+    "cameras": 15,
+    "checks": [
+      {
+        "check": "Spawn to workshop",
+        "lateral_offset_m": -1,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Spawn to workshop",
+        "lateral_offset_m": 0,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Spawn to workshop",
+        "lateral_offset_m": 1,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Workshop to sanctuary",
+        "lateral_offset_m": -1,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Workshop to sanctuary",
+        "lateral_offset_m": 0,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Workshop to sanctuary",
+        "lateral_offset_m": 1,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Sanctuary to festival",
+        "lateral_offset_m": -1,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Sanctuary to festival",
+        "lateral_offset_m": 0,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Sanctuary to festival",
+        "lateral_offset_m": 1,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Festival to spawn",
+        "lateral_offset_m": -1,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Festival to spawn",
+        "lateral_offset_m": 0,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Festival to spawn",
+        "lateral_offset_m": 1,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Diagonal sanctuary shortcut",
+        "lateral_offset_m": -1,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Diagonal sanctuary shortcut",
+        "lateral_offset_m": 0,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Diagonal sanctuary shortcut",
+        "lateral_offset_m": 1,
+        "clear": true,
+        "obstacle": null
+      },
+      {
+        "check": "Arrival camera line of sight to crystal",
+        "clear": true,
+        "first_visible_object": "Great sacred crystal"
+      }
+    ],
+    "all_passed": true
+  },
+  "passed": true,
+  "arch_stones_outward_normals": 99
+}
