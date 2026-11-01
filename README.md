@@ -9,6 +9,7 @@ This repository contains the editable Blender lobby, Roblox Studio installation 
 ## Start here
 
 - **Editable lobby:** [blender/atheria_lobby.blend](blender/atheria_lobby.blend). This is revision 08, with the Festival Court sign removed.
+- **Finished tavern interior:** [blender/tavern/atheria_tavern_finished.blend](blender/tavern/atheria_tavern_finished.blend) · [views](renders/tavern-finished/tavern_finished_views.pdf) · [notes](blender/tavern/README_FINISHED.md). Expanded room with materials, lighting, props, and a blank leaderboard.
 - **Texture exporter:** [blender/export_roblox.py](blender/export_roblox.py).
 - **Studio setup order:** [docs/STUDIO_SETUP.md](docs/STUDIO_SETUP.md).
 - **Campaign artwork:** [art/atlas/atheria_simple_atlas.png](art/atlas/atheria_simple_atlas.png).
@@ -25,7 +26,7 @@ This repository contains the editable Blender lobby, Roblox Studio installation 
 | `roblox/decor/` | Apples plaque for the back of the Quest Hall |
 | `roblox/collision/` | Collision-fidelity repair for imported MeshParts |
 | `art/` | Illustrated campaign atlas and original lobby layout concepts |
-| `renders/` | Town and engraving presentation images/PDFs |
+| `renders/` | Town, tavern interior, and engraving presentation images/PDFs |
 | `docs/validation/` | Saved geometry validation reports from earlier revisions |
 
 ## Current state

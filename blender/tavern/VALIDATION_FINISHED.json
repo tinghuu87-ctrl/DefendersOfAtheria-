@@ -1,0 +1,237 @@
+{
+  "passed": true,
+  "room_concept_metres": [
+    18,
+    16.5,
+    5.1
+  ],
+  "blank_leaderboard": true,
+  "leaderboard_fonts": 0,
+  "leaderboard_dividers": 0,
+  "body_height_route_probes": [
+    {
+      "from": [
+        0,
+        -8.7
+      ],
+      "to": [
+        0,
+        -5
+      ],
+      "offset": -0.28,
+      "clear": true
+    },
+    {
+      "from": [
+        0,
+        -8.7
+      ],
+      "to": [
+        0,
+        -5
+      ],
+      "offset": 0,
+      "clear": true
+    },
+    {
+      "from": [
+        0,
+        -8.7
+      ],
+      "to": [
+        0,
+        -5
+      ],
+      "offset": 0.28,
+      "clear": true
+    },
+    {
+      "from": [
+        0,
+        -5
+      ],
+      "to": [
+        3.8,
+        -4.8
+      ],
+      "offset": -0.28,
+      "clear": true
+    },
+    {
+      "from": [
+        0,
+        -5
+      ],
+      "to": [
+        3.8,
+        -4.8
+      ],
+      "offset": 0,
+      "clear": true
+    },
+    {
+      "from": [
+        0,
+        -5
+      ],
+      "to": [
+        3.8,
+        -4.8
+      ],
+      "offset": 0.28,
+      "clear": true
+    },
+    {
+      "from": [
+        3.8,
+        -4.8
+      ],
+      "to": [
+        3.8,
+        5.7
+      ],
+      "offset": -0.28,
+      "clear": true
+    },
+    {
+      "from": [
+        3.8,
+        -4.8
+      ],
+      "to": [
+        3.8,
+        5.7
+      ],
+      "offset": 0,
+      "clear": true
+    },
+    {
+      "from": [
+        3.8,
+        -4.8
+      ],
+      "to": [
+        3.8,
+        5.7
+      ],
+      "offset": 0.28,
+      "clear": true
+    },
+    {
+      "from": [
+        3.8,
+        5.7
+      ],
+      "to": [
+        2.25,
+        6.3
+      ],
+      "offset": -0.28,
+      "clear": true
+    },
+    {
+      "from": [
+        3.8,
+        5.7
+      ],
+      "to": [
+        2.25,
+        6.3
+      ],
+      "offset": 0,
+      "clear": true
+    },
+    {
+      "from": [
+        3.8,
+        5.7
+      ],
+      "to": [
+        2.25,
+        6.3
+      ],
+      "offset": 0.28,
+      "clear": true
+    },
+    {
+      "from": [
+        3.8,
+        -3.1
+      ],
+      "to": [
+        7.1,
+        -3.1
+      ],
+      "offset": -0.28,
+      "clear": true
+    },
+    {
+      "from": [
+        3.8,
+        -3.1
+      ],
+      "to": [
+        7.1,
+        -3.1
+      ],
+      "offset": 0,
+      "clear": true
+    },
+    {
+      "from": [
+        3.8,
+        -3.1
+      ],
+      "to": [
+        7.1,
+        -3.1
+      ],
+      "offset": 0.28,
+      "clear": true
+    }
+  ],
+  "ceiling_present_in_saved_scene": true,
+  "finish_details": 102,
+  "views": [
+    "arrival",
+    "hearth",
+    "cutaway",
+    "leaderboard"
+  ],
+  "scope": "Blender render and concept circulation; Roblox integration and in-Studio character checks remain separate.",
+  "standalone_rebuild_passed": true,
+  "render_engine": "Cycles",
+  "render_samples_by_view": {
+    "arrival": 16,
+    "hearth": 16,
+    "cutaway": 16,
+    "leaderboard": 64
+  },
+  "delivered_views": [
+    {
+      "view": "arrival",
+      "width": 1200,
+      "height": 900,
+      "sha256": "ff6076fda1ce57d8b55b1395b48315c68ed9227ca909b2c9bf3189796c65f71c"
+    },
+    {
+      "view": "hearth",
+      "width": 1200,
+      "height": 900,
+      "sha256": "bf8e7f2873c4e051f7d3034c88dc35dcfc3b16a801db8863cccfb7575182bb1a"
+    },
+    {
+      "view": "cutaway",
+      "width": 1200,
+      "height": 900,
+      "sha256": "3f67aefc6a1b1e4938d9de35072fc6dbe2f689edb0fec63b00c186e5316c6253"
+    },
+    {
+      "view": "leaderboard",
+      "width": 1200,
+      "height": 900,
+      "sha256": "f5084c0b7a20b7e615de8420f8554f2566c8c63719055f6dcc3450fc69e7bdc9"
+    }
+  ],
+  "presentation_denoiser": "Open Image Denoise 1.4.3 with albedo and normal guides"
+}

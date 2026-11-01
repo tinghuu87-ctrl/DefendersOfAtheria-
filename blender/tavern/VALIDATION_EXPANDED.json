@@ -1,0 +1,19 @@
+{
+  "room_concept_metres": [
+    18,
+    16.5,
+    5.1
+  ],
+  "floor_area_ratio_to_v1": 2.25,
+  "main_and_leaderboard_route_body_height_probes": 15,
+  "routes_clear": true,
+  "leaderboard": "Blank framed board; no lettering, row dividers or rankings connected",
+  "views": [
+    "arrival",
+    "hearth",
+    "cutaway",
+    "plan",
+    "leaderboard"
+  ],
+  "passed": true
+}

@@ -1,0 +1,17 @@
+{
+  "main_route_body_height_probes": 12,
+  "entrance_and_main_aisle_clear": true,
+  "render_views": [
+    "arrival",
+    "hearth",
+    "cutaway",
+    "plan"
+  ],
+  "room_concept_metres": [
+    12,
+    11,
+    5.1
+  ],
+  "roblox_integration": "not yet connected",
+  "passed": true
+}

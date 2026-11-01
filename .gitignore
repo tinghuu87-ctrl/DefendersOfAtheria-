@@ -10,3 +10,8 @@ __pycache__/
 !.env.example
 Atheria_Roblox_Export/
 Town_Renders/
+
+# Generated intermediate tavern build outputs
+blender/tavern/output/
+blender/tavern/output-expanded/
+blender/tavern/output-finished/
